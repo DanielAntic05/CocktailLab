@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "221690815855",
+    "project_id": "cocktaillab-fe61b",
+    "storage_bucket": "cocktaillab-fe61b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:221690815855:android:5f8ac0dc0093dba0dc749a",
+        "android_client_info": {
+          "package_name": "com.example.cocktaillab"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBU0HD_MCttu-UfGgJU__lkguPBYr3NRIA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
