@@ -32,21 +32,6 @@ class SignUpActivity : ComponentActivity() {
                 OutlinedTextField(value = email, onValueChange = { email = it }, label = { Text("Email") })
                 OutlinedTextField(value = password, onValueChange = { password = it }, label = { Text("Password") })
 
-                /*Button(onClick = {
-                    authViewModel.signUp(email, password) { success ->
-                        if (success) {
-                            Toast.makeText(context, "Sign Up Successful", Toast.LENGTH_SHORT).show()
-                            context.startActivity(Intent(context, HomeActivity::class.java))
-                            finish()
-                        }
-                        else {
-                            Toast.makeText(context, "Sign Up Failed", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                }) {
-                    Text("Sign Up")
-                }*/
-
                 Button(onClick = {
                     authViewModel.signUp(email, password) { success, errorMessage ->
                         if (success) {

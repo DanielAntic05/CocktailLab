@@ -33,7 +33,7 @@ class SignInActivity : ComponentActivity() {
 
 
                 // TODO
-                //  Add Password the eye when writing the password to see/hide it.
+                //  Add to the Password field the eye when writing the password to see/hide the characters.
                 OutlinedTextField(value = password, onValueChange = { password = it }, label = { Text("Password") })
 
 

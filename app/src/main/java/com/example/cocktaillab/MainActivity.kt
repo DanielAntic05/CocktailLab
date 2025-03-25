@@ -52,32 +52,3 @@ class MainActivity : ComponentActivity() {
    }
 }
 
-/*
-class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            Text("App is running...")
-        }
-    }
-}
-*/
-
-
-/*
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    CocktailLabTheme {
-        Greeting("Android")
-    }
-}
-*/
