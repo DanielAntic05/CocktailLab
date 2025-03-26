@@ -56,7 +56,7 @@ class SearchAlcoholActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val favoriteManager = FavoriteManager(this)  // Needs Context
+        val favoriteManager = FavoriteManager(this)
         val apiService = Retrofit.Builder()
             .baseUrl("https://www.thecocktaildb.com/")
             .addConverterFactory(GsonConverterFactory.create())
@@ -68,7 +68,6 @@ class SearchAlcoholActivity : ComponentActivity() {
         val viewModel: SearchViewModel by viewModels { viewModelFactory }
 
         setContent {
-//            CocktailLabTheme {
             MaterialTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
@@ -98,10 +97,7 @@ fun RealTimeSearchScreen(
         )
     )
 ) {
-    // Properly initialize navigation within composable body
     val navController = rememberNavController()
-
-    // Collect search results as state
     val searchResults by viewModel.searchResults.collectAsState()
 
     NavHost(
@@ -154,8 +150,6 @@ fun SearchScreen(
             label = { Text("Search cocktails...") },
             modifier = Modifier.fillMaxWidth(),
             trailingIcon = {
-                // TODO
-                //  Make possible to click the icon and show only one card and add it to favorites.
                 IconButton(onClick = {
                     if (searchQuery.isNotEmpty()) {
                         showSingleDrinkDetails = true // Switch to detailed view
@@ -180,7 +174,6 @@ fun SearchScreen(
             CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
         }
 
-        // Conditional Results Display
         if (showSingleDrinkDetails) {
             // Detailed Card View (after Enter/Search click)
 

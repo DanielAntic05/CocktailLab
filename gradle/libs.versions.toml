@@ -11,12 +11,20 @@ activityCompose = "1.10.1"
 composeBom = "2024.04.01"
 firebaseAuthKtx = "23.2.0"
 firebaseDatabaseKtx = "21.0.0"
+#materialIconsExtended = "1.10.1"
 mediationTestSuite = "3.0.0"
 navigationCompose = "2.8.9"
 firebaseFirestoreKtx = "25.1.3"
+material3Lint = "1.4.0-alpha10"
+
+composeMaterial = "1.7.8" # or your compose version
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+
+#androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsExtended" }
+androidx-compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended", version.ref = "composeMaterial" }
+
 core-splashscreen = { module = "adroidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
@@ -36,6 +44,8 @@ firebase-database-ktx = { group = "com.google.firebase", name = "firebase-databa
 mediation-test-suite = { group = "com.google.android.ads", name = "mediation-test-suite", version.ref = "mediationTestSuite" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestoreKtx" }
+androidx-material3-lint = { group = "androidx.compose.material3", name = "material3-lint", version.ref = "material3Lint" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

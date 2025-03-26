@@ -10,28 +10,50 @@ class AuthViewModel : ViewModel() {
     private val db = FirebaseDatabase.getInstance().reference
     private val auth = FirebaseAuth.getInstance()
 
-    fun signIn(email: String, password: String, onResult: (Boolean) -> Unit) {
+
+    fun signIn(email: String, password: String, onResult: (Boolean, String?) -> Unit) {
+        if (email.isBlank() || password.isBlank()) {
+            onResult(false, "Please fill in all fields")
+            return
+        }
+
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
-                onResult(task.isSuccessful)
+                if (task.isSuccessful) {
+                    onResult(true, null)
+                } else {
+                    onResult(false, task.exception?.message)
+                }
             }
     }
 
     fun signUp(email: String, password: String, onResult: (Boolean, String?) -> Unit) {
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    val userId = auth.currentUser?.uid
-                    if (userId != null) {
-                        saveUserData(userId, email)  // Save user data to Firebase Database
-                    }
-                    onResult(true, null) // Success, no error message
-                }
-                else {
-                    onResult(false, task.exception?.message) // Failure, send error message
-                }
+        when {
+            email.isBlank() || password.isBlank() -> {
+                onResult(false, "Please fill in all fields")
+                return
             }
+            password.length < 6 -> {
+                onResult(false, "Password must be at least 6 characters")
+                return
+            }
+            else -> {
+                auth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            val userId = auth.currentUser?.uid
+                            if (userId != null) {
+                                saveUserData(userId, email)
+                            }
+                            onResult(true, null)
+                        } else {
+                            onResult(false, task.exception?.message)
+                        }
+                    }
+            }
+        }
     }
+
 
     private fun saveUserData(userId: String, email: String) {
         val user = mapOf(

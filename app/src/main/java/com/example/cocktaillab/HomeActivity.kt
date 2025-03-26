@@ -5,16 +5,12 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.firebase.auth.FirebaseAuth
@@ -48,13 +44,10 @@ fun HomeScreen(
     onMyFavoritesClick: () -> Unit,
     onLogoutClick: () -> Unit
 ) {
-    Box(modifier = Modifier.fillMaxSize()) {
-        Image(
-            painter = painterResource(id = R.drawable.ic_launcher_background),
-            contentDescription = "Background",
-            contentScale = ContentScale.FillBounds,
-            modifier = Modifier.matchParentSize()
-        )
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = Color.White
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -68,13 +61,18 @@ fun HomeScreen(
             Spacer(modifier = Modifier.height(16.dp))
             MainButton(text = "My Favorites", onClick = onMyFavoritesClick)
             Spacer(modifier = Modifier.height(16.dp))
-            MainButton(text = "Log Out", onClick = onLogoutClick, backgroundColor = Color.Red, textColor = Color.White)
+            MainButton(
+                text = "Log Out",
+                onClick = onLogoutClick,
+                backgroundColor = Color(0xFFFF2800),
+                textColor = Color.White
+            )
         }
     }
 }
 
 @Composable
-fun MainButton(text: String, onClick: () -> Unit, backgroundColor: Color = Color(0xFF1CF7FF), textColor: Color = Color.Black) {
+fun MainButton(text: String, onClick: () -> Unit, backgroundColor: Color = Color(0xFFD0BCFF), textColor: Color = Color.Black) {
     Button(
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(containerColor = backgroundColor),

@@ -59,27 +59,6 @@ class SearchViewModel(
         return _favorites.any { it.id == cocktailId }
     }
 
-
-/*
-    fun addToFavorites(cocktail: Cocktail) {
-        if (!_favorites.any { it.id == cocktail.id }) {
-            _favorites.add(cocktail)
-            _favoritesFlow.value = _favorites.toList() // Update the flow
-            // Persist if needed
-        }
-    }
-*/
-
-
-/*
-    fun removeFromFavorites(cocktailId: String) {
-        _favorites.removeAll { it.id == cocktailId }
-        _favoritesFlow.value = _favorites.toList() // Update the flow
-        // Persist if needed
-    }
-*/
-
-
     init {
         loadFavorites()
     }
@@ -95,14 +74,14 @@ class SearchViewModel(
         if (!_favorites.any { it.id == cocktail.id }) {
             _favorites.add(cocktail)
             _favoritesFlow.value = _favorites.toList()
-            favoriteManager.saveFavorites(_favorites.toList()) // Persist
+            favoriteManager.saveFavorites(_favorites.toList())
         }
     }
 
     fun removeFromFavorites(cocktailId: String) {
         _favorites.removeAll { it.id == cocktailId }
         _favoritesFlow.value = _favorites.toList()
-        favoriteManager.saveFavorites(_favorites.toList()) // Persist
+        favoriteManager.saveFavorites(_favorites.toList())
     }
 }
 

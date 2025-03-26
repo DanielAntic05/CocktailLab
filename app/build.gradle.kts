@@ -75,6 +75,19 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.2")
     implementation(libs.androidx.navigation.compose)
     implementation(libs.firebase.firestore.ktx)
+    implementation(libs.androidx.espresso.core)
+    implementation(libs.androidx.material3.lint)
+
+
+    // Material Icons (required for Visibility/VisibilityOff icons)
+    implementation(libs.androidx.compose.material.icons.extended)
+
+    // OR if you only want the core icons (smaller footprint):
+    implementation("androidx.compose.material:material-icons-core:$1.10.1")
+
+    // Material 3 (for OutlinedTextField and other components)
+    implementation("androidx.compose.material3:material3:$1.10.1")
+
 
     // Testing
     testImplementation(libs.junit)
