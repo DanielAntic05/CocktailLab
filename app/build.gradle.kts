@@ -74,6 +74,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.2")
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.firebase.firestore.ktx)
 
     // Testing
     testImplementation(libs.junit)

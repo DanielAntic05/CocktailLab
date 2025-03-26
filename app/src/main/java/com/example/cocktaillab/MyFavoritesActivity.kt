@@ -1,5 +1,6 @@
 package com.example.cocktaillab
 
+import android.content.Context
 import com.example.cocktaillab.ui.components.CocktailDetailsScreen
 import com.example.cocktaillab.ui.components.CocktailSuggestionItem
 import android.os.Bundle
@@ -12,6 +13,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
@@ -19,12 +21,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.cocktaillab.api.CocktailApiService
 import com.example.cocktaillab.repository.CocktailRepository
+import com.example.cocktaillab.repository.FavoriteManager
 import com.example.cocktaillab.viewmodel.SearchViewModelFactory
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import com.example.cocktaillab.viewmodel.SearchViewModel
 
-class MyFavouritesActivity : ComponentActivity() {
+class MyFavoritesActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -43,6 +46,7 @@ class MyFavouritesActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FavoritesScreen(
+    context: Context = LocalContext.current,
     viewModel: SearchViewModel = viewModel(
         factory = SearchViewModelFactory(
             repository = CocktailRepository(
@@ -51,7 +55,8 @@ fun FavoritesScreen(
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
                     .create(CocktailApiService::class.java)
-            )
+            ),
+            favoriteManager = FavoriteManager(context)
         )
     )
 ) {
@@ -95,6 +100,7 @@ fun FavoritesScreen(
                 }
             }
         }
+
         composable("favoriteDetails/{cocktailId}") { backStackEntry ->
             val cocktailId = backStackEntry.arguments?.getString("cocktailId")
             val cocktail = favorites.find { it.id == cocktailId }

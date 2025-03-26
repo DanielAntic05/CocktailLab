@@ -1,11 +1,12 @@
 package com.example.cocktaillab
 
+import android.content.Context
 import com.example.cocktaillab.ui.components.CocktailSuggestionItem
-import com.example.cocktaillab.ui.components.CocktailDetailsScreen
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -33,6 +34,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
@@ -41,6 +43,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.cocktaillab.api.CocktailApiService
 import com.example.cocktaillab.repository.CocktailRepository
+import com.example.cocktaillab.repository.FavoriteManager
+import com.example.cocktaillab.ui.components.CocktailDetailsScreen
 import com.example.cocktaillab.ui.components.CocktailSearchResultItem
 import com.example.cocktaillab.viewmodel.SearchViewModel
 import com.example.cocktaillab.viewmodel.SearchViewModelFactory
@@ -51,6 +55,18 @@ import retrofit2.converter.gson.GsonConverterFactory
 class SearchAlcoholActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val favoriteManager = FavoriteManager(this)  // Needs Context
+        val apiService = Retrofit.Builder()
+            .baseUrl("https://www.thecocktaildb.com/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(CocktailApiService::class.java)
+
+        val repository = CocktailRepository(apiService)
+        val viewModelFactory = SearchViewModelFactory(repository, favoriteManager)
+        val viewModel: SearchViewModel by viewModels { viewModelFactory }
+
         setContent {
 //            CocktailLabTheme {
             MaterialTheme {
@@ -58,7 +74,7 @@ class SearchAlcoholActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    RealTimeSearchScreen()
+                    RealTimeSearchScreen(viewModel = viewModel)
                 }
             }
         }
@@ -68,6 +84,7 @@ class SearchAlcoholActivity : ComponentActivity() {
 
 @Composable
 fun RealTimeSearchScreen(
+    context: Context = LocalContext.current,
     viewModel: SearchViewModel = viewModel(
         factory = SearchViewModelFactory(
             repository = CocktailRepository(
@@ -76,7 +93,8 @@ fun RealTimeSearchScreen(
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
                     .create(CocktailApiService::class.java)
-            )
+            ),
+            favoriteManager = FavoriteManager(context)
         )
     )
 ) {
@@ -96,9 +114,9 @@ fun RealTimeSearchScreen(
                 viewModel = viewModel
             )
         }
+
         composable("details/{cocktailId}") { backStackEntry ->
             val cocktailId = backStackEntry.arguments?.getString("cocktailId")
-            // Find cocktail from collected state
             val cocktail = searchResults.find { it.id == cocktailId }
             if (cocktail != null) {
                 CocktailDetailsScreen(
@@ -120,7 +138,7 @@ fun SearchScreen(
     //  Make possible to go back to the HomeActivity.
 
     var searchQuery by remember { mutableStateOf("") }
-    var showDetailedResults by remember { mutableStateOf(false) }
+    var showSingleDrinkDetails by remember { mutableStateOf(false) }
     val searchResults by viewModel.searchResults.collectAsState()
     val isLoading by viewModel.isLoading
 
@@ -130,17 +148,17 @@ fun SearchScreen(
             value = searchQuery,
             onValueChange = {
                 searchQuery = it
-                showDetailedResults = false // Show suggestions while typing
+                showSingleDrinkDetails = false // Show suggestions while typing
                 viewModel.searchCocktails(it)
             },
             label = { Text("Search cocktails...") },
             modifier = Modifier.fillMaxWidth(),
             trailingIcon = {
                 // TODO
-                //  Make possible to click the icon and show only one card and add it to favourites.
+                //  Make possible to click the icon and show only one card and add it to favorites.
                 IconButton(onClick = {
                     if (searchQuery.isNotEmpty()) {
-                        showDetailedResults = true // Switch to detailed view
+                        showSingleDrinkDetails = true // Switch to detailed view
                         viewModel.searchCocktails(searchQuery)
                     }
                 }) {
@@ -150,7 +168,7 @@ fun SearchScreen(
             singleLine = true,
             keyboardActions = KeyboardActions(onSearch = {
                 if (searchQuery.isNotEmpty()) {
-                    showDetailedResults = true // Switch to detailed view
+                    showSingleDrinkDetails = true // Switch to detailed view
                     viewModel.searchCocktails(searchQuery)
                 }
             })
@@ -163,11 +181,9 @@ fun SearchScreen(
         }
 
         // Conditional Results Display
-        if (showDetailedResults) {
+        if (showSingleDrinkDetails) {
             // Detailed Card View (after Enter/Search click)
 
-            // TODO FIRST
-            //  Save to favourites not working.
             LazyColumn(
                 modifier = Modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(12.dp)
@@ -176,8 +192,17 @@ fun SearchScreen(
                     CocktailSearchResultItem(
                         cocktail = cocktail,
                         isFavorite = viewModel.isFavorite(cocktail.id),
-                        onFavoriteClick = { /*...*/ },
-                        onClick = { /*...*/ }
+                        onFavoriteClick = {
+                            if (viewModel.isFavorite(cocktail.id)) {
+                                viewModel.removeFromFavorites(cocktail.id)
+                            }
+                            else {
+                                viewModel.addToFavorites(cocktail)
+                            }
+                        },
+                        onClick = {
+                            navController.navigate("details/${cocktail.id}")
+                        }
                     )
                 }
             }

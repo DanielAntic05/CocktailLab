@@ -27,7 +27,7 @@ class HomeActivity : ComponentActivity() {
             HomeScreen(
                 onSearchAlcoholClick = { startActivity(Intent(this, SearchAlcoholActivity::class.java)) },
                 //onSearchRandomClick = { startActivity(Intent(this, SearchRandomAlcoholActivity::class.java)) },
-                onMyFavoritesClick = { startActivity(Intent(this, MyFavouritesActivity::class.java)) },
+                onMyFavoritesClick = { startActivity(Intent(this, MyFavoritesActivity::class.java)) },
                 onLogoutClick = {
                     FirebaseAuth.getInstance().signOut()
                     Toast.makeText(this, "Logged out successfully!", Toast.LENGTH_SHORT).show()

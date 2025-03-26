@@ -35,6 +35,6 @@
             android:name=".SearchAlcoholActivity"
             android:exported="true" />
 
-        <activity android:name=".MyFavouritesActivity" android:exported="true"/>
+        <activity android:name=".MyFavoritesActivity" android:exported="true"/>
     </application>
 </manifest>
