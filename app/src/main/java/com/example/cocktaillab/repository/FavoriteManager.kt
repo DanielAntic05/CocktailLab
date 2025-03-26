@@ -1,11 +1,11 @@
 package com.example.cocktaillab.repository
 
 import android.content.Context
-import androidx.core.content.edit  // For prefs.edit { } extension
+import androidx.core.content.edit
 import com.google.firebase.auth.FirebaseAuth
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.example.cocktaillab.api.model.Cocktail  // Replace with your actual Cocktail class path
+import com.example.cocktaillab.api.model.Cocktail
 
 
 class FavoriteManager(context: Context) {
@@ -29,11 +29,4 @@ class FavoriteManager(context: Context) {
         val type = object : TypeToken<List<Cocktail>>() {}.type
         return gson.fromJson(json, type) ?: emptyList()
     }
-
-
-    // No
-    // Clear favorites when user logs out
-    /*fun clearUserData() {
-        prefs.edit { remove(getUserKey()) }
-    }*/
 }

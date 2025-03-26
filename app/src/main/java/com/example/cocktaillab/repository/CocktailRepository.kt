@@ -6,7 +6,6 @@ import com.example.cocktaillab.api.model.Cocktail
 
 
 class CocktailRepository(private val apiService: CocktailApiService) {
-    // In CocktailRepository.kt
     suspend fun searchCocktails(query: String): List<Cocktail> {
         return try {
             val response = apiService.searchCocktailsByName(query)

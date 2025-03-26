@@ -130,9 +130,6 @@ fun SearchScreen(
     navController: NavController,
     viewModel: SearchViewModel
 ) {
-    // TODO
-    //  Make possible to go back to the HomeActivity.
-
     var searchQuery by remember { mutableStateOf("") }
     var showSingleDrinkDetails by remember { mutableStateOf(false) }
     val searchResults by viewModel.searchResults.collectAsState()

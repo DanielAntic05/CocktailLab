@@ -19,108 +19,6 @@ import com.example.cocktaillab.api.model.Cocktail
 import com.example.cocktaillab.viewmodel.SearchViewModel
 
 
-// MyFavoritesActivity on click details.
-// TODO:
-//  SearchAlcoholActivity on search menu bar details.
-/*
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun CocktailDetailsScreen(
-    navController: NavController,
-    cocktail: Cocktail,
-    viewModel: SearchViewModel
-) {
-    var isFavorite by remember { mutableStateOf(viewModel.isFavorite(cocktail.id)) }
-
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text(cocktail.name) },
-                navigationIcon = {
-                    IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
-                    }
-                },
-                actions = {
-                    IconButton(onClick = {
-                        isFavorite = !isFavorite
-                        if (isFavorite) {
-                            viewModel.addToFavorites(cocktail)
-                        }
-                        else {
-                            viewModel.removeFromFavorites(cocktail.id)
-                        }
-                    }) {
-                        Icon(
-                            imageVector = if (isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
-                            contentDescription = "Favorite",
-                            tint = if (isFavorite) MaterialTheme.colorScheme.primary
-                            else MaterialTheme.colorScheme.onSurface
-                        )
-                    }
-                }
-            )
-        }
-    ) { padding ->
-        Column(
-            modifier = Modifier
-                .padding(padding)
-                .padding(16.dp)
-                .verticalScroll(rememberScrollState())
-        ) {
-            AsyncImage(
-                model = cocktail.imageUrl,
-                contentDescription = cocktail.name,
-                modifier = Modifier
-                    .size(200.dp)
-                    .align(Alignment.CenterHorizontally)
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Text(
-                text = "Category: ${cocktail.category ?: "N/A"}",
-                style = MaterialTheme.typography.bodyLarge
-            )
-
-            Text(
-                text = "Glass: ${cocktail.glass ?: "N/A"}",
-                style = MaterialTheme.typography.bodyLarge
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Text(
-                text = "Instructions:",
-                style = MaterialTheme.typography.titleMedium
-            )
-
-            Text(
-                text = cocktail.instructions ?: "No instructions available",
-                style = MaterialTheme.typography.bodyMedium
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Text(
-                text = "Ingredients:",
-                style = MaterialTheme.typography.titleMedium
-            )
-
-            /*
-            cocktail.formattedIngredients.forEach { ingredient ->
-                Text(
-                    text = "- $ingredient",
-                    style = MaterialTheme.typography.bodyMedium
-                )
-            }
-            */
-        }
-    }
-}
-*/
-
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CocktailDetailsScreen(
@@ -259,14 +157,6 @@ fun CocktailSearchResultItem(
             Text("Category: ${cocktail.category ?: "Unknown"}")
             //Text("Alcoholic: ${cocktail.alcoholic ?: "Unknown"}")
             Text("Glass: ${cocktail.glass ?: "Unknown"}")
-
-            /*
-            // Ingredients
-            Text("Ingredients:", style = MaterialTheme.typography.titleMedium)
-            cocktail.formattedIngredients.forEach { ingredient ->
-                Text("- $ingredient")
-            }
-            */
         }
     }
 }

@@ -32,7 +32,7 @@ class MainActivity : ComponentActivity() {
         //  1) Change the app icon;
         //  2) Change the splash icon;
         //  3) Display Password min and max number of characters;
-        //  4) Maybe some general handling and outputs of email and passoword (@, delete enter, delete space, ...);
+        //  4) Maybe some general handling and outputs of email and password (@, delete enter, delete space, ...);
         //  5) ...;
 
         setContent {
@@ -46,7 +46,7 @@ class MainActivity : ComponentActivity() {
                 else {
                     context.startActivity(Intent(context, SignInActivity::class.java))
                 }
-                finish() // Close MainActivity
+                finish()
             }
         }
    }

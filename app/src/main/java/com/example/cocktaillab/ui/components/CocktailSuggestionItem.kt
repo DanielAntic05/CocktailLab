@@ -8,7 +8,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.cocktaillab.api.model.Cocktail
-//import com.example.cocktaillab.api.model.IngredientMeasure
 
 
 // Quick suggestions while typing.
@@ -49,34 +48,3 @@ fun CocktailSuggestionItem(
         }
     }
 }
-
-/*
-@Preview(showBackground = true, device = Devices.PIXEL_4)
-@Composable
-fun CocktailSuggestionItemPreview() {
-    MaterialTheme {
-        val previewCocktail = Cocktail(
-            id = "11007",
-            name = "Margarita",
-            category = "Cocktail",
-            alcoholic = "Alcoholic",
-            glass = "Cocktail glass",
-            instructions = "Rub the rim...",
-            imageUrl = "https://www.thecocktaildb.com/images/media/drink/5noda61589575158.jpg"
-        ).apply {
-            // 'val' cannot be reassigned
-            ingredients = listOf(
-                IngredientMeasure("Tequila", "1.5 oz"),
-                IngredientMeasure("Triple sec", "0.5 oz"),
-                IngredientMeasure("Lime juice", "1 oz")
-            )
-        }
-
-        CocktailSuggestionItem(
-            cocktail = previewCocktail,
-            onClick = {}
-        )
-    }
-}
-
- */
